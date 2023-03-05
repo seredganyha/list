@@ -19,6 +19,7 @@ void Spisok::FrontAdd(int value) {
 	} 
 	else {
 		appendNode->setNext(this->head);
+		this->head->setPrevious(appendNode);
 		this->head = appendNode;
 	}
 }
@@ -32,6 +33,7 @@ void Spisok::BackAdd(int value) {
 	}
 	else {
 		this->tail->setNext(appendNode);
+		appendNode->setPrevious(this->tail);
 		this->tail = appendNode;
 	}
 }
@@ -43,6 +45,7 @@ void Spisok::BackAdd(Node* appendNode) {
 	}
 	else {
 		this->tail->setNext(appendNode);
+		appendNode->setPrevious(this->tail);
 		this->tail = appendNode;
 	}
 }
@@ -52,11 +55,15 @@ bool Spisok::isEmpty() {
 }
 
 void Spisok::printAll() {
-	if(isEmpty()) std::cout << "List is Empty";
+	if (isEmpty()) {
+		std::cout << "List is Empty";
+
+		return;
+	}
 
 	Node* currentNode = this->head;
-	while (currentNode)
-	{
+
+	while (currentNode) {
 		std::cout << currentNode->getValue();
 		currentNode = currentNode->getNext();
 	}
@@ -67,6 +74,7 @@ void Spisok::removeHeadNode() {
 
 	Node* currentNode = this->head;
 	this->head = currentNode->getNext();
+	this->head->setPrevious(nullptr);
 	
 	delete currentNode;
 }
@@ -74,18 +82,11 @@ void Spisok::removeHeadNode() {
 void Spisok::removeBackNode() {
 	if (isEmpty()) return;
 
-	if (head == tail) {
-		removeHeadNode();
-	}
+	Node* currentNode = this->tail;
+	this->tail = currentNode->getPrevious();
+	this->tail->setNext(nullptr);
 
-	Node* currentNode = this->head;
-	while (currentNode->getNext() != this->tail) {
-		currentNode = currentNode->getNext();
-	}
-	currentNode->setNext(nullptr);
-	delete this->tail;
-
-	this->tail = currentNode;
+	delete currentNode;
 }
 
 int Spisok::getLength() {
@@ -136,4 +137,38 @@ void Spisok::InsertListInCenter(Spisok* spisok) {
 
 	spisok->BackAdd(plaseToInsert->getNext());
 	plaseToInsert->setNext(spisok->getHead());
+}
+
+void Spisok::minNodeToHead() {
+	Node* minNode = this->head;
+	Node* currentNode = this->head;
+
+	while (currentNode->getNext()) {
+		bool nodeComparison = minNode->getValue() > currentNode->getNext()->getValue();
+
+		if (nodeComparison) {
+			minNode = currentNode->getNext();
+		}
+
+		currentNode = currentNode->getNext();
+	}
+
+	if (head == minNode) {
+		return;
+	}
+	else if(tail == minNode) {
+		minNode->getPrevious()->setNext(nullptr);
+		this->tail = minNode->getPrevious();
+	}
+	else {
+		minNode->getPrevious()->setNext(minNode->getNext());
+		minNode->getNext()->setPrevious(minNode->getPrevious());
+	}
+
+
+
+	this->head->setPrevious(minNode);
+	minNode->setNext(this->head);
+	this->head = minNode;
+	this->head->setPrevious(nullptr);
 }

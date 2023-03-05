@@ -16,6 +16,7 @@ public:
 	void removeBackNode();
 	int getLength();
 	void InsertListInCenter(Spisok* spisok);
+	void minNodeToHead();
 	Node* getHead();
 	Node* getTail();
 

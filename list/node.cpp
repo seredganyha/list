@@ -3,6 +3,7 @@
 Node::Node(int val) {
 	this->m_value = val;
 	this->setNext(nullptr);
+	this->setPrevious(nullptr);
 };
 
 Node::~Node() {};
@@ -17,4 +18,12 @@ Node* Node::getNext() {
 
 void Node::setNext(Node* next) {
 	this->next = next;
+}
+
+Node* Node::getPrevious() {
+	return this->previous;
+}
+
+void Node::setPrevious(Node* previous) {
+	this->previous = previous;
 }

@@ -7,12 +7,15 @@ int main()
     Spisok spisokOne;
     Spisok* spisokTwo = new Spisok();
 
-    spisokOne.BackAdd(1);
-    spisokOne.BackAdd(2);
-    spisokOne.BackAdd(3);
+   
     spisokOne.BackAdd(4);
     spisokOne.BackAdd(5);
     spisokOne.BackAdd(6);
+    spisokOne.BackAdd(1);
+    spisokOne.BackAdd(2);
+    spisokOne.BackAdd(3);
+    
+
 
     spisokTwo->BackAdd(8);
     spisokTwo->BackAdd(8);
@@ -31,7 +34,7 @@ int main()
     spisokOne.printAll();
     std::cout << "\n";
 
-    spisokOne.removeAllNode();
+    spisokOne.minNodeToHead();
 
     spisokOne.printAll();
 
